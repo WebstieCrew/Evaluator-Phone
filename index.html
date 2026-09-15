@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evaluator-Phone - Advanced Mobile Device Evaluator</title>
+    <title>Evaluator-Phone</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -29,6 +29,7 @@
             margin: 0;
             padding: 0;
             font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -55,39 +56,44 @@
         .navbar {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 1.25rem 2rem;
+            padding: 1rem 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 1rem;
         }
 
         .logo {
             display: flex;
             align-items: center;
             gap: 0.75rem;
-            font-size: 1.35rem;
+            font-size: 1.25rem;
             font-weight: 800;
             letter-spacing: -0.03em;
             color: var(--text-main);
             text-decoration: none;
+            white-space: nowrap;
         }
 
         .logo i {
             color: var(--accent-primary);
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             filter: drop-shadow(0 0 8px var(--accent-glow));
         }
 
         .nav-actions {
             display: flex;
-            gap: 1rem;
+            gap: 0.75rem;
             align-items: center;
+            width: 100%;
+            max-width: 320px;
         }
 
         .search-bar {
             position: relative;
             display: flex;
             align-items: center;
+            width: 100%;
         }
 
         .search-bar input {
@@ -97,13 +103,12 @@
             border-radius: var(--radius-md);
             color: var(--text-main);
             outline: none;
-            width: 260px;
+            width: 100%;
             font-size: 0.9rem;
             transition: var(--transition);
         }
 
         .search-bar input:focus {
-            width: 320px;
             border-color: var(--accent-primary);
             box-shadow: 0 0 20px var(--accent-glow);
             background: rgba(255, 255, 255, 0.08);
@@ -119,14 +124,14 @@
         .container {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 2.5rem 2rem;
+            padding: 1.5rem;
             width: 100%;
             flex: 1;
         }
 
         .dashboard-grid {
             display: grid;
-            grid-template-columns: 380px 1fr;
+            grid-template-columns: 360px 1fr;
             gap: 2rem;
         }
 
@@ -134,7 +139,7 @@
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: var(--radius-lg);
-            padding: 1.75rem;
+            padding: 1.5rem;
             backdrop-filter: blur(20px);
             box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.45);
         }
@@ -146,12 +151,13 @@
         }
 
         .form-title {
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             font-weight: 700;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.25rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            gap: 0.5rem;
         }
 
         .form-title span {
@@ -163,11 +169,11 @@
         .form-group {
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
+            gap: 0.4rem;
         }
 
         .form-group label {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--text-muted);
             font-weight: 600;
             text-transform: uppercase;
@@ -178,7 +184,7 @@
             background: rgba(9, 13, 22, 0.7);
             border: 1px solid var(--border-color);
             border-radius: var(--radius-md);
-            padding: 0.8rem 1rem;
+            padding: 0.75rem 1rem;
             color: var(--text-main);
             outline: none;
             font-size: 0.95rem;
@@ -205,9 +211,9 @@
 
         .range-slider input[type="range"] {
             width: 100%;
-            height: 6px;
+            height: 8px;
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 3px;
+            border-radius: 4px;
             accent-color: var(--accent-primary);
             cursor: pointer;
         }
@@ -217,7 +223,7 @@
             color: #fff;
             border: none;
             border-radius: var(--radius-md);
-            padding: 0.9rem;
+            padding: 0.85rem;
             font-size: 0.95rem;
             font-weight: 700;
             cursor: pointer;
@@ -227,30 +233,47 @@
             align-items: center;
             gap: 0.6rem;
             margin-top: 0.5rem;
+            min-height: 48px;
         }
 
-        .btn-primary:hover {
-            opacity: 0.95;
-            box-shadow: 0 0 25px var(--accent-glow);
-            transform: translateY(-2px);
+        .btn-primary:active {
+            transform: scale(0.98);
+        }
+
+        .btn-toggle-filters {
+            display: none;
+            width: 100%;
+            margin-bottom: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 0.75rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            cursor: pointer;
         }
 
         .results-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.25rem;
+            gap: 1rem;
+            flex-wrap: wrap;
         }
 
         .results-title {
-            font-size: 1.35rem;
+            font-size: 1.25rem;
             font-weight: 700;
         }
 
         .device-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+            gap: 1.25rem;
         }
 
         .device-card {
@@ -265,16 +288,9 @@
             position: relative;
         }
 
-        .device-card:hover {
-            transform: translateY(-6px);
-            border-color: rgba(99, 102, 241, 0.4);
-            background: var(--bg-card-hover);
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
-        }
-
         .device-image-wrap {
             width: 100%;
-            height: 220px;
+            height: 200px;
             overflow: hidden;
             position: relative;
             background: rgba(0, 0, 0, 0.2);
@@ -292,12 +308,8 @@
             filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5));
         }
 
-        .device-card:hover .device-image-wrap img {
-            transform: scale(1.08);
-        }
-
         .device-body {
-            padding: 1.5rem;
+            padding: 1.25rem;
             flex: 1;
             display: flex;
             flex-direction: column;
@@ -307,19 +319,20 @@
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 1rem;
+            margin-bottom: 0.75rem;
+            gap: 0.5rem;
         }
 
         .device-info h3 {
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             font-weight: 700;
             line-height: 1.3;
         }
 
         .device-info p {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--text-muted);
-            margin-top: 0.2rem;
+            margin-top: 0.1rem;
         }
 
         .score-badge {
@@ -327,19 +340,20 @@
             border: 1px solid var(--accent-primary);
             color: #818cf8;
             font-weight: 800;
-            font-size: 0.95rem;
-            padding: 0.4rem 0.75rem;
+            font-size: 0.9rem;
+            padding: 0.35rem 0.65rem;
             border-radius: var(--radius-md);
             box-shadow: 0 0 12px var(--accent-glow);
+            white-space: nowrap;
         }
 
         .specs-list {
             list-style: none;
             display: flex;
             flex-direction: column;
-            gap: 0.65rem;
-            margin: 1rem 0;
-            font-size: 0.85rem;
+            gap: 0.55rem;
+            margin: 0.75rem 0;
+            font-size: 0.8rem;
             flex: 1;
         }
 
@@ -348,7 +362,8 @@
             justify-content: space-between;
             color: var(--text-muted);
             border-bottom: 1px dashed rgba(255, 255, 255, 0.05);
-            padding-bottom: 0.35rem;
+            padding-bottom: 0.3rem;
+            gap: 0.5rem;
         }
 
         .specs-list li span {
@@ -361,13 +376,14 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding-top: 1rem;
+            padding-top: 0.85rem;
             border-top: 1px solid var(--border-color);
             margin-top: auto;
+            gap: 0.5rem;
         }
 
         .price-tag {
-            font-size: 1.25rem;
+            font-size: 1.15rem;
             font-weight: 800;
             color: var(--accent-secondary);
         }
@@ -376,21 +392,16 @@
             background: transparent;
             border: 1px solid var(--border-color);
             color: var(--text-main);
-            padding: 0.5rem 0.9rem;
+            padding: 0.5rem 0.75rem;
             border-radius: var(--radius-md);
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 600;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 0.4rem;
+            gap: 0.35rem;
             transition: var(--transition);
-        }
-
-        .btn-link:hover {
-            border-color: var(--accent-primary);
-            color: var(--accent-primary);
-            background: rgba(99, 102, 241, 0.1);
+            min-height: 40px;
         }
 
         .btn-compare {
@@ -402,6 +413,10 @@
             font-size: 0.85rem;
             cursor: pointer;
             transition: var(--transition);
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .btn-compare.active {
@@ -413,8 +428,8 @@
         .status-badge {
             display: inline-flex;
             align-items: center;
-            gap: 0.4rem;
-            font-size: 0.75rem;
+            gap: 0.35rem;
+            font-size: 0.7rem;
             padding: 0.2rem 0.5rem;
             border-radius: 20px;
             background: rgba(16, 185, 129, 0.15);
@@ -424,20 +439,23 @@
 
         .comparison-bar {
             position: fixed;
-            bottom: 2rem;
+            bottom: 1.5rem;
             left: 50%;
-            transform: translateX(-50%) translateY(150%);
+            transform: translateX(-50%) translateY(200%);
             background: rgba(15, 23, 42, 0.95);
             border: 1px solid var(--accent-primary);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(20px);
-            padding: 1rem 1.5rem;
+            padding: 0.85rem 1.25rem;
             border-radius: var(--radius-lg);
             display: flex;
             align-items: center;
-            gap: 1.5rem;
+            gap: 1rem;
             z-index: 200;
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            width: calc(100% - 2rem);
+            max-width: 600px;
+            justify-content: space-between;
         }
 
         .comparison-bar.show {
@@ -446,26 +464,25 @@
 
         .comparison-items {
             display: flex;
-            gap: 1rem;
+            gap: 0.5rem;
+            overflow-x: auto;
+            padding-bottom: 2px;
         }
 
         .comparison-chip {
             background: rgba(255, 255, 255, 0.08);
-            padding: 0.4rem 0.8rem;
+            padding: 0.35rem 0.65rem;
             border-radius: var(--radius-md);
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.4rem;
+            white-space: nowrap;
         }
 
         .comparison-chip i {
             cursor: pointer;
             color: var(--text-muted);
-        }
-
-        .comparison-chip i:hover {
-            color: #ef4444;
         }
 
         .modal-overlay {
@@ -474,7 +491,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.85);
             backdrop-filter: blur(8px);
             z-index: 300;
             display: flex;
@@ -483,6 +500,7 @@
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.3s ease;
+            padding: 1rem;
         }
 
         .modal-overlay.active {
@@ -494,35 +512,47 @@
             background: var(--bg-base);
             border: 1px solid var(--border-color);
             border-radius: var(--radius-lg);
-            width: 90%;
+            width: 100%;
             max-width: 900px;
             max-height: 85vh;
             overflow-y: auto;
-            padding: 2rem;
+            padding: 1.5rem;
             position: relative;
         }
 
         .modal-close {
             position: absolute;
-            top: 1.25rem;
-            right: 1.25rem;
+            top: 1rem;
+            right: 1rem;
             background: transparent;
             border: none;
             color: var(--text-muted);
             font-size: 1.25rem;
             cursor: pointer;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            margin-top: 1rem;
         }
 
         .compare-table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 1.5rem;
+            min-width: 500px;
         }
 
         .compare-table th, .compare-table td {
-            padding: 1rem;
+            padding: 0.85rem;
             border-bottom: 1px solid var(--border-color);
             text-align: left;
+            font-size: 0.85rem;
         }
 
         .compare-table th {
@@ -534,23 +564,42 @@
             .dashboard-grid {
                 grid-template-columns: 1fr;
             }
+
+            .btn-toggle-filters {
+                display: flex;
+            }
+
+            .aside-card {
+                display: none;
+            }
+
+            .aside-card.open {
+                display: block;
+            }
         }
 
         @media (max-width: 640px) {
             .navbar {
                 flex-direction: column;
-                gap: 1rem;
+                align-items: stretch;
             }
-            .search-bar input {
-                width: 100%;
+
+            .nav-actions {
+                max-width: 100%;
             }
-            .search-bar input:focus {
-                width: 100%;
-            }
+
             .comparison-bar {
-                width: 90%;
                 flex-direction: column;
-                gap: 1rem;
+                align-items: stretch;
+                gap: 0.75rem;
+            }
+
+            .comparison-bar .btn-primary {
+                margin-top: 0;
+            }
+
+            .device-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -566,25 +615,29 @@
             <div class="nav-actions">
                 <div class="search-bar">
                     <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" id="deviceSearch" placeholder="Search devices...">
+                    <input type="text" id="deviceSearch" data-i18n-placeholder="searchPlaceholder">
                 </div>
             </div>
         </nav>
     </header>
 
     <main class="container">
+        <button class="btn-toggle-filters" id="toggleFiltersBtn">
+            <i class="fa-solid fa-sliders"></i> <span data-i18n="toggleFilters">Toggle Filters</span>
+        </button>
+
         <div class="dashboard-grid">
-            <aside class="card">
+            <aside class="card aside-card" id="asideFilters">
                 <form class="evaluator-form" id="evaluationForm">
                     <div class="form-title">
-                        <span><i class="fa-solid fa-sliders"></i> Custom Criteria Weights</span>
-                        <span class="status-badge"><i class="fa-solid fa-circle-check"></i> API Live</span>
+                        <span><i class="fa-solid fa-sliders"></i> <span data-i18n="evalWeights">Evaluation Weights</span></span>
+                        <span class="status-badge"><i class="fa-solid fa-circle-check"></i> <span data-i18n="liveData">Live Data</span></span>
                     </div>
 
                     <div class="form-group">
-                        <label for="brand">Brand Filter</label>
+                        <label for="brand" data-i18n="brand">Brand</label>
                         <select id="brand" class="form-control">
-                            <option value="all">All Brands</option>
+                            <option value="all" data-i18n="allBrands">All Brands</option>
                             <option value="apple">Apple</option>
                             <option value="samsung">Samsung</option>
                             <option value="google">Google</option>
@@ -594,13 +647,13 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="price">Max Budget ($)</label>
-                        <input type="number" id="price" class="form-control" placeholder="1500" value="1500">
+                        <label for="price" data-i18n="maxBudget">Max Budget</label>
+                        <input type="number" id="price" class="form-control" placeholder="10000" value="10000">
                     </div>
 
                     <div class="range-slider">
                         <div class="range-header">
-                            <span>Camera Priority</span>
+                            <span data-i18n="cameraPriority">Camera Priority</span>
                             <span id="cameraVal">40%</span>
                         </div>
                         <input type="range" id="camera" min="0" max="100" value="40">
@@ -608,7 +661,7 @@
 
                     <div class="range-slider">
                         <div class="range-header">
-                            <span>Performance Priority</span>
+                            <span data-i18n="perfPriority">Performance Priority</span>
                             <span id="perfVal">35%</span>
                         </div>
                         <input type="range" id="performance" min="0" max="100" value="35">
@@ -616,22 +669,22 @@
 
                     <div class="range-slider">
                         <div class="range-header">
-                            <span>Battery & Charging</span>
+                            <span data-i18n="batteryPriority">Battery & Charging</span>
                             <span id="batteryVal">25%</span>
                         </div>
                         <input type="range" id="battery" min="0" max="100" value="25">
                     </div>
 
                     <button type="submit" class="btn-primary">
-                        <i class="fa-solid fa-calculator"></i> Calculate Scores
+                        <i class="fa-solid fa-calculator"></i> <span data-i18n="recalculate">Recalculate Scores</span>
                     </button>
                 </form>
             </aside>
 
             <section class="results-container">
                 <div class="results-header">
-                    <h2 class="results-title">Evaluated Devices</h2>
-                    <span id="resultCount" style="color: var(--text-muted); font-size: 0.9rem; font-weight: 600;">Loading real-time devices...</span>
+                    <h2 class="results-title" data-i18n="evaluatedDevices">Evaluated Smartphones</h2>
+                    <span id="resultCount" style="color: var(--text-muted); font-size: 0.85rem; font-weight: 600;">...</span>
                 </div>
 
                 <div class="device-grid" id="deviceGrid">
@@ -642,24 +695,138 @@
 
     <div class="comparison-bar" id="comparisonBar">
         <div class="comparison-items" id="comparisonItems"></div>
-        <button class="btn-primary" id="openCompareModal">Compare Devices</button>
+        <button class="btn-primary" id="openCompareModal" data-i18n="compareSelected">Compare Selected</button>
     </div>
 
     <div class="modal-overlay" id="compareModal">
         <div class="modal-content">
             <button class="modal-close" id="closeCompareModal"><i class="fa-solid fa-xmark"></i></button>
-            <h2 style="font-size: 1.5rem; font-weight: 700;">Side-by-Side Comparison</h2>
-            <div id="modalTableContainer"></div>
+            <h2 style="font-size: 1.3rem; font-weight: 700;" data-i18n="comparisonTitle">Side-by-Side Comparison</h2>
+            <div class="table-responsive" id="modalTableContainer"></div>
         </div>
     </div>
 
     <script>
+        const TRANSLATIONS = {
+            'pt': {
+                siteTitle: "Evaluator-Phone - Avaliador Avançado de Celulares e Smartphones",
+                searchPlaceholder: "Buscar celular ou chip...",
+                toggleFilters: "Mostrar / Ocultar Filtros",
+                evalWeights: "Pesos de Avaliação",
+                liveData: "Dados Ativos",
+                brand: "Marca",
+                allBrands: "Todas as marcas",
+                maxBudget: "Orçamento Máximo",
+                cameraPriority: "Prioridade de Câmera",
+                perfPriority: "Prioridade de Desempenho",
+                batteryPriority: "Bateria e Carga",
+                recalculate: "Recalcular Notas",
+                evaluatedDevices: "Smartphones Avaliados",
+                showingCount: "Exibindo {count} itens avaliados",
+                compareSelected: "Comparar Selecionados",
+                comparisonTitle: "Comparativo Lado a Lado",
+                scoreText: "Nota",
+                processor: "Processador",
+                display: "Tela",
+                camera: "Câmera",
+                battery: "Bateria",
+                ram: "RAM",
+                price: "Preço",
+                analyze: "Analisar",
+                feature: "Recurso",
+                limitAlert: "Você pode comparar até 3 dispositivos simultaneamente.",
+                currency: "R$"
+            },
+            'en': {
+                siteTitle: "Evaluator-Phone - Advanced Mobile Device Evaluator",
+                searchPlaceholder: "Search device or chipset...",
+                toggleFilters: "Toggle Filters",
+                evalWeights: "Evaluation Weights",
+                liveData: "Live Data",
+                brand: "Brand",
+                allBrands: "All Brands",
+                maxBudget: "Max Budget",
+                cameraPriority: "Camera Priority",
+                perfPriority: "Performance Priority",
+                batteryPriority: "Battery & Charging",
+                recalculate: "Recalculate Scores",
+                evaluatedDevices: "Evaluated Smartphones",
+                showingCount: "Showing {count} evaluated items",
+                compareSelected: "Compare Selected",
+                comparisonTitle: "Side-by-Side Comparison",
+                scoreText: "Score",
+                processor: "Processor",
+                display: "Display",
+                camera: "Camera",
+                battery: "Battery",
+                ram: "RAM",
+                price: "Price",
+                analyze: "Analyze",
+                feature: "Feature",
+                limitAlert: "You can compare up to 3 devices at once.",
+                currency: "$"
+            },
+            'es': {
+                siteTitle: "Evaluator-Phone - Evaluador Avanzado de Teléfonos",
+                searchPlaceholder: "Buscar teléfono o procesador...",
+                toggleFilters: "Mostrar / Ocultar Filtros",
+                evalWeights: "Pesos de Evaluación",
+                liveData: "Datos En Vivo",
+                brand: "Marca",
+                allBrands: "Todas las marcas",
+                maxBudget: "Presupuesto Máximo",
+                cameraPriority: "Prioridad de Cámara",
+                perfPriority: "Prioridad de Rendimiento",
+                batteryPriority: "Batería y Carga",
+                recalculate: "Recalcular Notas",
+                evaluatedDevices: "Teléfonos Evaluados",
+                showingCount: "Mostrando {count} elementos evaluados",
+                compareSelected: "Comparar Seleccionados",
+                comparisonTitle: "Comparativa Lado a Lado",
+                scoreText: "Nota",
+                processor: "Procesador",
+                display: "Pantalla",
+                camera: "Cámara",
+                battery: "Batería",
+                ram: "RAM",
+                price: "Precio",
+                analyze: "Analizar",
+                feature: "Característica",
+                limitAlert: "Puedes comparar hasta 3 dispositivos simultáneamente.",
+                currency: "$"
+            }
+        };
+
+        function getSystemLanguage() {
+            const userLang = navigator.language || navigator.userLanguage || 'en';
+            const langCode = userLang.toLowerCase().split('-')[0];
+            return TRANSLATIONS[langCode] ? langCode : 'en';
+        }
+
+        const currentLang = getSystemLanguage();
+        const t = TRANSLATIONS[currentLang];
+
+        function applyI18n() {
+            document.documentElement.lang = currentLang === 'pt' ? 'pt-BR' : currentLang;
+            document.title = t.siteTitle;
+
+            document.querySelectorAll('[data-i18n]').forEach(elem => {
+                const key = elem.getAttribute('data-i18n');
+                if (t[key]) elem.textContent = t[key];
+            });
+
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(elem => {
+                const key = elem.getAttribute('data-i18n-placeholder');
+                if (t[key]) elem.placeholder = t[key];
+            });
+        }
+
         const API_DEVICES = [
             {
                 id: "samsung-s25-ultra",
                 name: "Galaxy S25 Ultra",
                 brand: "samsung",
-                price: 1299,
+                prices: { pt: 9999, en: 1299, es: 1299 },
                 image: "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?auto=format&fit=crop&w=600&q=80",
                 specs: {
                     processor: "Snapdragon 8 Elite",
@@ -674,7 +841,7 @@
                 id: "iphone-16-pro-max",
                 name: "iPhone 16 Pro Max",
                 brand: "apple",
-                price: 1199,
+                prices: { pt: 11499, en: 1199, es: 1199 },
                 image: "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=600&q=80",
                 specs: {
                     processor: "Apple A18 Pro",
@@ -689,11 +856,11 @@
                 id: "pixel-9-pro",
                 name: "Pixel 9 Pro XL",
                 brand: "google",
-                price: 1099,
+                prices: { pt: 7800, en: 1099, es: 1099 },
                 image: "https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=600&q=80",
                 specs: {
                     processor: "Google Tensor G4",
-                    display: '6.8" LTPO OLED 1280 nits',
+                    display: '6.8" LTPO OLED 120Hz',
                     camera: "50MP + 48MP + 48MP 5x",
                     battery: "5060 mAh (37W)",
                     ram: "16GB"
@@ -704,7 +871,7 @@
                 id: "oneplus-13",
                 name: "OnePlus 13",
                 brand: "oneplus",
-                price: 899,
+                prices: { pt: 6400, en: 899, es: 899 },
                 image: "https://images.unsplash.com/photo-1565849904461-04a58ad377e0?auto=format&fit=crop&w=600&q=80",
                 specs: {
                     processor: "Snapdragon 8 Elite",
@@ -719,12 +886,12 @@
                 id: "xiaomi-14-ultra",
                 name: "Xiaomi 14 Ultra",
                 brand: "xiaomi",
-                price: 1299,
+                prices: { pt: 8999, en: 1299, es: 1299 },
                 image: "https://images.unsplash.com/photo-1546054454-aa26e2b734c7?auto=format&fit=crop&w=600&q=80",
                 specs: {
                     processor: "Snapdragon 8 Gen 3",
                     display: '6.73" LTPO AMOLED 120Hz',
-                    camera: "50MP Quad-Camera Leica",
+                    camera: "50MP Leica Quad",
                     battery: "5000 mAh (90W)",
                     ram: "16GB"
                 },
@@ -746,6 +913,13 @@
         updateSliderVal('performance', 'perfVal');
         updateSliderVal('battery', 'batteryVal');
 
+        function formatCurrency(val) {
+            if (currentLang === 'pt') {
+                return `R$ ${val.toLocaleString('pt-BR')}`;
+            }
+            return `$${val.toLocaleString('en-US')}`;
+        }
+
         function calculateIndex(device, weights) {
             const totalWeight = weights.camera + weights.performance + weights.battery;
             if (totalWeight === 0) return 0;
@@ -764,7 +938,7 @@
                 selectedForComparison = selectedForComparison.filter(id => id !== deviceId);
             } else {
                 if (selectedForComparison.length >= 3) {
-                    alert('You can compare up to 3 devices at once.');
+                    alert(t.limitAlert);
                     return;
                 }
                 selectedForComparison.push(deviceId);
@@ -809,21 +983,23 @@
             };
 
             const filteredDevices = API_DEVICES.filter(device => {
+                const price = device.prices[currentLang] || device.prices['en'];
                 const matchesBrand = brandFilter === 'all' || device.brand === brandFilter;
-                const matchesPrice = device.price <= maxPrice;
+                const matchesPrice = price <= maxPrice;
                 const matchesSearch = device.name.toLowerCase().includes(searchQuery) || device.specs.processor.toLowerCase().includes(searchQuery);
                 return matchesBrand && matchesPrice && matchesSearch;
             });
 
             const evaluatedDevices = filteredDevices.map(device => ({
                 ...device,
+                currentPrice: device.prices[currentLang] || device.prices['en'],
                 calculatedIndex: calculateIndex(device, weights)
             })).sort((a, b) => b.calculatedIndex - a.calculatedIndex);
 
             const grid = document.getElementById('deviceGrid');
             const resultCount = document.getElementById('resultCount');
             
-            resultCount.textContent = `Showing ${evaluatedDevices.length} evaluated items`;
+            resultCount.textContent = t.showingCount.replace('{count}', evaluatedDevices.length);
             grid.innerHTML = '';
 
             evaluatedDevices.forEach(device => {
@@ -840,22 +1016,22 @@
                                 <h3>${device.name}</h3>
                                 <p>${device.brand.toUpperCase()}</p>
                             </div>
-                            <div class="score-badge">${device.calculatedIndex}</div>
+                            <div class="score-badge">${t.scoreText} ${device.calculatedIndex}</div>
                         </div>
                         <ul class="specs-list">
-                            <li>Processor <span>${device.specs.processor}</span></li>
-                            <li>Display <span>${device.specs.display}</span></li>
-                            <li>Camera <span>${device.specs.camera}</span></li>
-                            <li>Battery <span>${device.specs.battery}</span></li>
-                            <li>RAM <span>${device.specs.ram}</span></li>
+                            <li>${t.processor} <span>${device.specs.processor}</span></li>
+                            <li>${t.display} <span>${device.specs.display}</span></li>
+                            <li>${t.camera} <span>${device.specs.camera}</span></li>
+                            <li>${t.battery} <span>${device.specs.battery}</span></li>
+                            <li>${t.ram} <span>${device.specs.ram}</span></li>
                         </ul>
                         <div class="device-footer">
-                            <span class="price-tag">$${device.price}</span>
+                            <span class="price-tag">${formatCurrency(device.currentPrice)}</span>
                             <div style="display: flex; gap: 0.5rem;">
-                                <button class="btn-compare ${isCompared ? 'active' : ''}" onclick="toggleCompare('${device.id}')">
+                                <button class="btn-compare ${isCompared ? 'active' : ''}" onclick="toggleCompare('${device.id}')" aria-label="Compare">
                                     <i class="fa-solid fa-layer-group"></i>
                                 </button>
-                                <button class="btn-link">Analyze <i class="fa-solid fa-arrow-right"></i></button>
+                                <button class="btn-link">${t.analyze} <i class="fa-solid fa-arrow-right"></i></button>
                             </div>
                         </div>
                     </div>
@@ -874,33 +1050,33 @@
                 <table class="compare-table">
                     <thead>
                         <tr>
-                            <th>Feature</th>
+                            <th>${t.feature}</th>
                             ${selectedDevices.map(d => `<th>${d.name}</th>`).join('')}
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Price</td>
-                            ${selectedDevices.map(d => `<td style="color: var(--accent-secondary); font-weight: 700;">$${d.price}</td>`).join('')}
+                            <td>${t.price}</td>
+                            ${selectedDevices.map(d => `<td style="color: var(--accent-secondary); font-weight: 700;">${formatCurrency(d.prices[currentLang] || d.prices['en'])}</td>`).join('')}
                         </tr>
                         <tr>
-                            <td>Processor</td>
+                            <td>${t.processor}</td>
                             ${selectedDevices.map(d => `<td>${d.specs.processor}</td>`).join('')}
                         </tr>
                         <tr>
-                            <td>Display</td>
+                            <td>${t.display}</td>
                             ${selectedDevices.map(d => `<td>${d.specs.display}</td>`).join('')}
                         </tr>
                         <tr>
-                            <td>Camera</td>
+                            <td>${t.camera}</td>
                             ${selectedDevices.map(d => `<td>${d.specs.camera}</td>`).join('')}
                         </tr>
                         <tr>
-                            <td>Battery</td>
+                            <td>${t.battery}</td>
                             ${selectedDevices.map(d => `<td>${d.specs.battery}</td>`).join('')}
                         </tr>
                         <tr>
-                            <td>RAM</td>
+                            <td>${t.ram}</td>
                             ${selectedDevices.map(d => `<td>${d.specs.ram}</td>`).join('')}
                         </tr>
                     </tbody>
@@ -915,6 +1091,10 @@
             document.getElementById('compareModal').classList.remove('active');
         });
 
+        document.getElementById('toggleFiltersBtn').addEventListener('click', () => {
+            document.getElementById('asideFilters').classList.toggle('open');
+        });
+
         document.getElementById('evaluationForm').addEventListener('submit', (e) => {
             e.preventDefault();
             renderDevices();
@@ -923,6 +1103,7 @@
         document.getElementById('deviceSearch').addEventListener('input', renderDevices);
         document.getElementById('brand').addEventListener('change', renderDevices);
 
+        applyI18n();
         renderDevices();
     </script>
 </body>
