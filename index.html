@@ -274,21 +274,26 @@
 
         .device-image-wrap {
             width: 100%;
-            height: 180px;
+            height: 220px;
             overflow: hidden;
             position: relative;
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
         }
 
         .device-image-wrap img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
             transition: var(--transition);
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5));
         }
 
         .device-card:hover .device-image-wrap img {
-            transform: scale(1.05);
+            transform: scale(1.08);
         }
 
         .device-body {
@@ -388,6 +393,23 @@
             background: rgba(99, 102, 241, 0.1);
         }
 
+        .btn-compare {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 0.5rem 0.75rem;
+            border-radius: var(--radius-md);
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-compare.active {
+            background: rgba(99, 102, 241, 0.2);
+            border-color: var(--accent-primary);
+            color: var(--text-main);
+        }
+
         .status-badge {
             display: inline-flex;
             align-items: center;
@@ -398,6 +420,114 @@
             background: rgba(16, 185, 129, 0.15);
             color: #34d399;
             border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .comparison-bar {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(150%);
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid var(--accent-primary);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            z-index: 200;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .comparison-bar.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .comparison-items {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .comparison-chip {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 0.4rem 0.8rem;
+            border-radius: var(--radius-md);
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .comparison-chip i {
+            cursor: pointer;
+            color: var(--text-muted);
+        }
+
+        .comparison-chip i:hover {
+            color: #ef4444;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 300;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-content {
+            background: var(--bg-base);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            width: 90%;
+            max-width: 900px;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.25rem;
+            right: 1.25rem;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.25rem;
+            cursor: pointer;
+        }
+
+        .compare-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+        }
+
+        .compare-table th, .compare-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            text-align: left;
+        }
+
+        .compare-table th {
+            color: var(--text-muted);
+            font-weight: 600;
         }
 
         @media (max-width: 1024px) {
@@ -416,6 +546,11 @@
             }
             .search-bar input:focus {
                 width: 100%;
+            }
+            .comparison-bar {
+                width: 90%;
+                flex-direction: column;
+                gap: 1rem;
             }
         }
     </style>
@@ -505,6 +640,19 @@
         </div>
     </main>
 
+    <div class="comparison-bar" id="comparisonBar">
+        <div class="comparison-items" id="comparisonItems"></div>
+        <button class="btn-primary" id="openCompareModal">Compare Devices</button>
+    </div>
+
+    <div class="modal-overlay" id="compareModal">
+        <div class="modal-content">
+            <button class="modal-close" id="closeCompareModal"><i class="fa-solid fa-xmark"></i></button>
+            <h2 style="font-size: 1.5rem; font-weight: 700;">Side-by-Side Comparison</h2>
+            <div id="modalTableContainer"></div>
+        </div>
+    </div>
+
     <script>
         const API_DEVICES = [
             {
@@ -512,7 +660,7 @@
                 name: "Galaxy S25 Ultra",
                 brand: "samsung",
                 price: 1299,
-                image: "image_agent_tag_1873985221351286179",
+                image: "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?auto=format&fit=crop&w=600&q=80",
                 specs: {
                     processor: "Snapdragon 8 Elite",
                     display: '6.8" Dynamic AMOLED 2X 120Hz',
@@ -527,7 +675,7 @@
                 name: "iPhone 16 Pro Max",
                 brand: "apple",
                 price: 1199,
-                image: "image_agent_tag_1873985221351287354",
+                image: "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=600&q=80",
                 specs: {
                     processor: "Apple A18 Pro",
                     display: '6.9" Super Retina XDR OLED',
@@ -542,7 +690,7 @@
                 name: "Pixel 9 Pro XL",
                 brand: "google",
                 price: 1099,
-                image: "image_agent_tag_1873985221351285597",
+                image: "https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=600&q=80",
                 specs: {
                     processor: "Google Tensor G4",
                     display: '6.8" LTPO OLED 1280 nits',
@@ -557,7 +705,7 @@
                 name: "OnePlus 13",
                 brand: "oneplus",
                 price: 899,
-                image: "image_agent_tag_1873985221351287936",
+                image: "https://images.unsplash.com/photo-1565849904461-04a58ad377e0?auto=format&fit=crop&w=600&q=80",
                 specs: {
                     processor: "Snapdragon 8 Elite",
                     display: '6.82" 2K AMOLED 120Hz',
@@ -572,7 +720,7 @@
                 name: "Xiaomi 14 Ultra",
                 brand: "xiaomi",
                 price: 1299,
-                image: "image_agent_tag_1873985221351286179",
+                image: "https://images.unsplash.com/photo-1546054454-aa26e2b734c7?auto=format&fit=crop&w=600&q=80",
                 specs: {
                     processor: "Snapdragon 8 Gen 3",
                     display: '6.73" LTPO AMOLED 120Hz',
@@ -583,6 +731,8 @@
                 rawScores: { camera: 99, performance: 95, battery: 91 }
             }
         ];
+
+        let selectedForComparison = [];
 
         const updateSliderVal = (id, targetId) => {
             const input = document.getElementById(id);
@@ -607,6 +757,44 @@
 
             const score = (weightedScore / totalWeight) / 10;
             return score.toFixed(1);
+        }
+
+        function toggleCompare(deviceId) {
+            if (selectedForComparison.includes(deviceId)) {
+                selectedForComparison = selectedForComparison.filter(id => id !== deviceId);
+            } else {
+                if (selectedForComparison.length >= 3) {
+                    alert('You can compare up to 3 devices at once.');
+                    return;
+                }
+                selectedForComparison.push(deviceId);
+            }
+            updateComparisonBar();
+            renderDevices();
+        }
+
+        function updateComparisonBar() {
+            const bar = document.getElementById('comparisonBar');
+            const container = document.getElementById('comparisonItems');
+
+            if (selectedForComparison.length === 0) {
+                bar.classList.remove('show');
+                return;
+            }
+
+            bar.classList.add('show');
+            container.innerHTML = '';
+
+            selectedForComparison.forEach(id => {
+                const device = API_DEVICES.find(d => d.id === id);
+                const chip = document.createElement('div');
+                chip.className = 'comparison-chip';
+                chip.innerHTML = `
+                    <span>${device.name}</span>
+                    <i class="fa-solid fa-xmark" onclick="toggleCompare('${device.id}')"></i>
+                `;
+                container.appendChild(chip);
+            });
         }
 
         function renderDevices() {
@@ -639,11 +827,12 @@
             grid.innerHTML = '';
 
             evaluatedDevices.forEach(device => {
+                const isCompared = selectedForComparison.includes(device.id);
                 const card = document.createElement('div');
                 card.className = 'device-card';
                 card.innerHTML = `
                     <div class="device-image-wrap">
-                        <img src="${device.image}" alt="${device.name}">
+                        <img src="${device.image}" alt="${device.name}" loading="lazy">
                     </div>
                     <div class="device-body">
                         <div class="device-header">
@@ -662,13 +851,69 @@
                         </ul>
                         <div class="device-footer">
                             <span class="price-tag">$${device.price}</span>
-                            <button class="btn-link">Analyze <i class="fa-solid fa-arrow-right"></i></button>
+                            <div style="display: flex; gap: 0.5rem;">
+                                <button class="btn-compare ${isCompared ? 'active' : ''}" onclick="toggleCompare('${device.id}')">
+                                    <i class="fa-solid fa-layer-group"></i>
+                                </button>
+                                <button class="btn-link">Analyze <i class="fa-solid fa-arrow-right"></i></button>
+                            </div>
                         </div>
                     </div>
                 `;
                 grid.appendChild(card);
             });
         }
+
+        document.getElementById('openCompareModal').addEventListener('click', () => {
+            const modal = document.getElementById('compareModal');
+            const container = document.getElementById('modalTableContainer');
+
+            const selectedDevices = API_DEVICES.filter(d => selectedForComparison.includes(d.id));
+
+            let tableHTML = `
+                <table class="compare-table">
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            ${selectedDevices.map(d => `<th>${d.name}</th>`).join('')}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Price</td>
+                            ${selectedDevices.map(d => `<td style="color: var(--accent-secondary); font-weight: 700;">$${d.price}</td>`).join('')}
+                        </tr>
+                        <tr>
+                            <td>Processor</td>
+                            ${selectedDevices.map(d => `<td>${d.specs.processor}</td>`).join('')}
+                        </tr>
+                        <tr>
+                            <td>Display</td>
+                            ${selectedDevices.map(d => `<td>${d.specs.display}</td>`).join('')}
+                        </tr>
+                        <tr>
+                            <td>Camera</td>
+                            ${selectedDevices.map(d => `<td>${d.specs.camera}</td>`).join('')}
+                        </tr>
+                        <tr>
+                            <td>Battery</td>
+                            ${selectedDevices.map(d => `<td>${d.specs.battery}</td>`).join('')}
+                        </tr>
+                        <tr>
+                            <td>RAM</td>
+                            ${selectedDevices.map(d => `<td>${d.specs.ram}</td>`).join('')}
+                        </tr>
+                    </tbody>
+                </table>
+            `;
+
+            container.innerHTML = tableHTML;
+            modal.classList.add('active');
+        });
+
+        document.getElementById('closeCompareModal').addEventListener('click', () => {
+            document.getElementById('compareModal').classList.remove('active');
+        });
 
         document.getElementById('evaluationForm').addEventListener('submit', (e) => {
             e.preventDefault();
