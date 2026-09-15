@@ -2,12 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Evaluator-Phone</title>
+
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" href="arts/phoneIcon.png">
+    <link rel="apple-touch-icon" href="arts/phoneIcon.png">
+    <meta name="theme-color" content="#090d16">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
         :root {
             --bg-base: #090d16;
@@ -75,9 +84,10 @@
             white-space: nowrap;
         }
 
-        .logo i {
-            color: var(--accent-primary);
-            font-size: 1.5rem;
+        .logo img {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
             filter: drop-shadow(0 0 8px var(--accent-glow));
         }
 
@@ -288,6 +298,12 @@
             position: relative;
         }
 
+        .device-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(99, 102, 241, 0.4);
+            background: var(--bg-card-hover);
+        }
+
         .device-image-wrap {
             width: 100%;
             height: 200px;
@@ -306,6 +322,10 @@
             object-fit: contain;
             transition: var(--transition);
             filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5));
+        }
+
+        .device-card:hover .device-image-wrap img {
+            transform: scale(1.05);
         }
 
         .device-body {
@@ -609,7 +629,7 @@
     <header>
         <nav class="navbar">
             <a href="#" class="logo">
-                <i class="fa-solid fa-mobile-screen-button"></i>
+                <img src="arts/phoneIcon.png" alt="Evaluator-Phone Icon">
                 <span>Evaluator-Phone</span>
             </a>
             <div class="nav-actions">
@@ -708,35 +728,6 @@
 
     <script>
         const TRANSLATIONS = {
-            'pt': {
-                siteTitle: "Evaluator-Phone - Avaliador Avançado de Celulares e Smartphones",
-                searchPlaceholder: "Buscar celular ou chip...",
-                toggleFilters: "Mostrar / Ocultar Filtros",
-                evalWeights: "Pesos de Avaliação",
-                liveData: "Dados Ativos",
-                brand: "Marca",
-                allBrands: "Todas as marcas",
-                maxBudget: "Orçamento Máximo",
-                cameraPriority: "Prioridade de Câmera",
-                perfPriority: "Prioridade de Desempenho",
-                batteryPriority: "Bateria e Carga",
-                recalculate: "Recalcular Notas",
-                evaluatedDevices: "Smartphones Avaliados",
-                showingCount: "Exibindo {count} itens avaliados",
-                compareSelected: "Comparar Selecionados",
-                comparisonTitle: "Comparativo Lado a Lado",
-                scoreText: "Nota",
-                processor: "Processador",
-                display: "Tela",
-                camera: "Câmera",
-                battery: "Bateria",
-                ram: "RAM",
-                price: "Preço",
-                analyze: "Analisar",
-                feature: "Recurso",
-                limitAlert: "Você pode comparar até 3 dispositivos simultaneamente.",
-                currency: "R$"
-            },
             'en': {
                 siteTitle: "Evaluator-Phone - Advanced Mobile Device Evaluator",
                 searchPlaceholder: "Search device or chipset...",
@@ -765,6 +756,35 @@
                 feature: "Feature",
                 limitAlert: "You can compare up to 3 devices at once.",
                 currency: "$"
+            },
+            'pt': {
+                siteTitle: "Evaluator-Phone - Avaliador Avançado de Celulares e Smartphones",
+                searchPlaceholder: "Buscar celular ou chip...",
+                toggleFilters: "Mostrar / Ocultar Filtros",
+                evalWeights: "Pesos de Avaliação",
+                liveData: "Dados Ativos",
+                brand: "Marca",
+                allBrands: "Todas as marcas",
+                maxBudget: "Orçamento Máximo",
+                cameraPriority: "Prioridade de Câmera",
+                perfPriority: "Prioridade de Desempenho",
+                batteryPriority: "Bateria e Carga",
+                recalculate: "Recalcular Notas",
+                evaluatedDevices: "Smartphones Avaliados",
+                showingCount: "Exibindo {count} itens avaliados",
+                compareSelected: "Comparar Selecionados",
+                comparisonTitle: "Comparativo Lado a Lado",
+                scoreText: "Nota",
+                processor: "Processador",
+                display: "Tela",
+                camera: "Câmera",
+                battery: "Bateria",
+                ram: "RAM",
+                price: "Preço",
+                analyze: "Analisar",
+                feature: "Recurso",
+                limitAlert: "Você pode comparar até 3 dispositivos simultaneamente.",
+                currency: "R$"
             },
             'es': {
                 siteTitle: "Evaluator-Phone - Evaluador Avanzado de Teléfonos",
@@ -807,7 +827,7 @@
         const t = TRANSLATIONS[currentLang];
 
         function applyI18n() {
-            document.documentElement.lang = currentLang === 'pt' ? 'pt-BR' : currentLang;
+            document.documentElement.lang = currentLang;
             document.title = t.siteTitle;
 
             document.querySelectorAll('[data-i18n]').forEach(elem => {
@@ -826,8 +846,8 @@
                 id: "samsung-s25-ultra",
                 name: "Galaxy S25 Ultra",
                 brand: "samsung",
-                prices: { pt: 9999, en: 1299, es: 1299 },
-                image: "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?auto=format&fit=crop&w=600&q=80",
+                prices: { en: 1299, pt: 9999, es: 1299 },
+                image: "arts/phoneIcon.png",
                 specs: {
                     processor: "Snapdragon 8 Elite",
                     display: '6.8" Dynamic AMOLED 2X 120Hz',
@@ -841,8 +861,8 @@
                 id: "iphone-16-pro-max",
                 name: "iPhone 16 Pro Max",
                 brand: "apple",
-                prices: { pt: 11499, en: 1199, es: 1199 },
-                image: "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=600&q=80",
+                prices: { en: 1199, pt: 11499, es: 1199 },
+                image: "arts/phoneIcon.png",
                 specs: {
                     processor: "Apple A18 Pro",
                     display: '6.9" Super Retina XDR OLED',
@@ -856,8 +876,8 @@
                 id: "pixel-9-pro",
                 name: "Pixel 9 Pro XL",
                 brand: "google",
-                prices: { pt: 7800, en: 1099, es: 1099 },
-                image: "https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=600&q=80",
+                prices: { en: 1099, pt: 7800, es: 1099 },
+                image: "arts/phoneIcon.png",
                 specs: {
                     processor: "Google Tensor G4",
                     display: '6.8" LTPO OLED 120Hz',
@@ -871,8 +891,8 @@
                 id: "oneplus-13",
                 name: "OnePlus 13",
                 brand: "oneplus",
-                prices: { pt: 6400, en: 899, es: 899 },
-                image: "https://images.unsplash.com/photo-1565849904461-04a58ad377e0?auto=format&fit=crop&w=600&q=80",
+                prices: { en: 899, pt: 6400, es: 899 },
+                image: "arts/phoneIcon.png",
                 specs: {
                     processor: "Snapdragon 8 Elite",
                     display: '6.82" 2K AMOLED 120Hz',
@@ -886,8 +906,8 @@
                 id: "xiaomi-14-ultra",
                 name: "Xiaomi 14 Ultra",
                 brand: "xiaomi",
-                prices: { pt: 8999, en: 1299, es: 1299 },
-                image: "https://images.unsplash.com/photo-1546054454-aa26e2b734c7?auto=format&fit=crop&w=600&q=80",
+                prices: { en: 1299, pt: 8999, es: 1299 },
+                image: "arts/phoneIcon.png",
                 specs: {
                     processor: "Snapdragon 8 Gen 3",
                     display: '6.73" LTPO AMOLED 120Hz',
@@ -1105,6 +1125,13 @@
 
         applyI18n();
         renderDevices();
+
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .catch((err) => console.error('Service Worker Registration Failed:', err));
+            });
+        }
     </script>
 </body>
 </html>
