@@ -1,0 +1,24 @@
+{
+  "name": "Evaluator-Phone",
+  "short_name": "EvaluatorPhone",
+  "description": "Advanced Mobile Device Evaluator and Comparison Tool",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#090d16",
+  "theme_color": "#090d16",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "arts/phoneIcon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "arts/phoneIcon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
