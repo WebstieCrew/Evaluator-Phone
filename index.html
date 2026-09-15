@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NexusEval - Advanced Mobile Device Evaluator</title>
+    <title>Evaluator-Phone - Advanced Mobile Device Evaluator</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -425,13 +425,13 @@
     <header>
         <nav class="navbar">
             <a href="#" class="logo">
-                <i class="fa-solid fa-microchip"></i>
-                <span>NexusEval Engine</span>
+                <i class="fa-solid fa-mobile-screen-button"></i>
+                <span>Evaluator-Phone</span>
             </a>
             <div class="nav-actions">
                 <div class="search-bar">
                     <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" id="deviceSearch" placeholder="Search flagship devices...">
+                    <input type="text" id="deviceSearch" placeholder="Search devices...">
                 </div>
             </div>
         </nav>
@@ -442,14 +442,14 @@
             <aside class="card">
                 <form class="evaluator-form" id="evaluationForm">
                     <div class="form-title">
-                        <span><i class="fa-solid fa-sliders"></i> Algorithmic Weights</span>
+                        <span><i class="fa-solid fa-sliders"></i> Custom Criteria Weights</span>
                         <span class="status-badge"><i class="fa-solid fa-circle-check"></i> API Live</span>
                     </div>
 
                     <div class="form-group">
                         <label for="brand">Brand Filter</label>
                         <select id="brand" class="form-control">
-                            <option value="all">All Top Brands</option>
+                            <option value="all">All Brands</option>
                             <option value="apple">Apple</option>
                             <option value="samsung">Samsung</option>
                             <option value="google">Google</option>
@@ -488,14 +488,14 @@
                     </div>
 
                     <button type="submit" class="btn-primary">
-                        <i class="fa-solid fa-calculator"></i> Re-Evaluate Rankings
+                        <i class="fa-solid fa-calculator"></i> Calculate Scores
                     </button>
                 </form>
             </aside>
 
             <section class="results-container">
                 <div class="results-header">
-                    <h2 class="results-title">Evaluated Flagship Devices</h2>
+                    <h2 class="results-title">Evaluated Devices</h2>
                     <span id="resultCount" style="color: var(--text-muted); font-size: 0.9rem; font-weight: 600;">Loading real-time devices...</span>
                 </div>
 
@@ -566,6 +566,21 @@
                     ram: "12GB / 16GB / 24GB"
                 },
                 rawScores: { camera: 92, performance: 99, battery: 100 }
+            },
+            {
+                id: "xiaomi-14-ultra",
+                name: "Xiaomi 14 Ultra",
+                brand: "xiaomi",
+                price: 1299,
+                image: "image_agent_tag_1873985221351286179",
+                specs: {
+                    processor: "Snapdragon 8 Gen 3",
+                    display: '6.73" LTPO AMOLED 120Hz',
+                    camera: "50MP Quad-Camera Leica",
+                    battery: "5000 mAh (90W)",
+                    ram: "16GB"
+                },
+                rawScores: { camera: 99, performance: 95, battery: 91 }
             }
         ];
 
